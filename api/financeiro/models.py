@@ -59,6 +59,19 @@ class Titulo(models.Model):
         default=0
     )
 
+    @property
+    def titulo_display(self):
+        return f'{self.fornecedor.nome}, {self.numero_documento}'
+
+    @property
+    def saldo(self):
+        valor_pago = sum(self.pagamento_set.all().values_list('valor', flat=True))
+        return self.valor - valor_pago
+
+    @property
+    def pago(self):
+        return self.saldo <= 0
+
     def __str__(self):
         return self.numero_documento
 

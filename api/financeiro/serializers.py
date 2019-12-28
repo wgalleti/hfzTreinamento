@@ -16,6 +16,19 @@ class ContaSerializer(serializers.ModelSerializer):
 
 class TituloSerializer(serializers.ModelSerializer):
     fornecedor_display = serializers.SerializerMethodField('_fornecedor')
+    saldo = serializers.DecimalField(
+        max_digits=15,
+        decimal_places=2,
+        read_only=True
+    )
+    pago = serializers.BooleanField(
+        read_only=True
+    )
+
+    titulo_display = serializers.CharField(
+        max_length=255,
+        read_only=True
+    )
 
     def _fornecedor(self, obj: Titulo):
         return FornecedorSerializer(obj.fornecedor).data

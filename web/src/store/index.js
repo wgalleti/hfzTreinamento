@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     fornecedores: [],
     contas: [],
-    titulos: []
+    titulos: [],
+    titulosPendentes: []
   },
   mutations: {
     setFornecedores (state, lista) {
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     },
     setTitulos (state, lista) {
       state.titulos = lista
+    },
+    setTitulosPendentes (state, lista) {
+      state.titulosPendentes = lista
     }
   },
   actions: {
@@ -36,6 +40,11 @@ export default new Vuex.Store({
       .get('/financeiro/titulos/')
       .then(res => {
         commit('setTitulos', res.data)
+      }),
+    loadTitulosPendentes: ({ commit }) => axios
+      .get('/financeiro/titulos/pendentes/')
+      .then(res => {
+        commit('setTitulosPendentes', res.data)
       })
   },
   modules: {

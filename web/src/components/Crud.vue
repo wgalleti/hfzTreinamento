@@ -7,6 +7,8 @@
     :search-panel="pesquisa"
     :columns="columns"
     :show-borders="true"
+    :on-toolbar-preparing="toolbarPreparing"
+    @selection-changed="onSelectionChanged"
   />
 </template>
 
@@ -38,21 +40,33 @@ export default {
     qtdCamposFormulario: {
       type: Number,
       default: 3
+    },
+    permiteAdicionar: {
+      type: Boolean,
+      default: true
+    },
+    permiteEditar: {
+      type: Boolean,
+      default: true
+    },
+    acoes: {
+      type: Array,
+      default: () => []
     }
   },
   data () {
     return {
       fornecedores: [],
       selecao: {
-        mode: 'multiple'
+        mode: 'single'
       },
       pesquisa: {
         visible: true,
         width: 300
       },
       edicao: {
-        allowAdding: true,
-        allowUpdating: true,
+        allowAdding: this.permiteAdicionar,
+        allowUpdating: this.permiteEditar,
         allowDeleting: true,
         useIcons: true,
         mode: 'form',
@@ -60,16 +74,39 @@ export default {
           labelLocation: 'top',
           colCount: this.qtdCamposFormulario,
           showValidationSummary: true,
-          items: this.formulario
+          items: this.formulario,
+          onInitialized: this.inicializaFormulario
         }
       },
       columns: this.colunas
     }
   },
   methods: {
+    onSelectionChanged ({ selectedRowsData }) {
+      this.$emit('selecionou', selectedRowsData[0])
+    },
     atualizar () {
       const grid = this.$refs.grid.instance
       grid.refresh()
+    },
+    inicializaFormulario ({ component }) {
+      this.$emit('instanciaFormulario', component)
+    },
+    toolbarPreparing (grid) {
+      let toolbarItems = grid.toolbarOptions.items
+
+      this.acoes.forEach(a => toolbarItems.unshift(a))
+
+      toolbarItems.unshift({
+        location: 'after',
+        widget: 'dxButton',
+        options: {
+          icon: 'refresh',
+          onClick (e) {
+            grid.component.refresh()
+          }
+        }
+      })
     }
   },
   computed: {

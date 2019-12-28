@@ -3,8 +3,11 @@
     <app-crud
       url="/financeiro/pagamentos/"
       :colunas="colunas"
-      :formulario="formulario"
+      :formulario="[]"
       :carregar-dados="carregar"
+      :permite-editar="false"
+      :permite-adicionar="false"
+      @instanciaFormulario="recebeFormulario"
     />
   </div>
 </template>
@@ -27,10 +30,19 @@ export default {
         store: this.$store.state.contas,
         paginate: true
       }
+    },
+    recebeFormulario (instancia) {
+      this.form = instancia
+    }
+  },
+  data () {
+    return {
+      form: null
     }
   },
   computed: {
     colunas () {
+      const self = this
       return [
         {
           dataField: 'id',
@@ -54,6 +66,11 @@ export default {
             dataSource: this.getTitulos,
             valueExpr: 'id',
             displayExpr: v => `${v.fornecedor_display.nome}, ${v.numero_documento}`
+          },
+          setCellValue (rowData, value) {
+            this.defaultSetCellValue(rowData, value)
+            self.titulo = self.$store.state.titulos.filter(f => f.id === value)[0]
+            rowData.valor = self.titulo.valor
           }
         },
         {
@@ -63,48 +80,6 @@ export default {
             valueExpr: 'id',
             displayExpr: 'descricao'
           }
-        }
-      ]
-    },
-    formulario () {
-      return [
-        {
-          dataField: 'titulo',
-          validationRules: [
-            { type: 'required', message: 'O título é obrigatório' }
-          ],
-          colSpan: 2
-        },
-        {
-          dataField: 'data',
-          editorOptions: {
-            dateSerializationFormat: 'yyyy-MM-dd'
-          },
-          validationRules: [
-            { type: 'required', message: 'A data é obrigatória' }
-          ],
-          colSpan: 1
-        },
-        {
-          dataField: 'valor',
-          editorType: 'dxNumberBox',
-          editorOptions: {
-            format: {
-              type: 'fixedPoint',
-              precision: 2
-            }
-          },
-          validationRules: [
-            { type: 'required', message: 'O valor é obrigatório' }
-          ],
-          colSpan: 1
-        },
-        {
-          dataField: 'conta',
-          validationRules: [
-            { type: 'required', message: 'A conta é obrigatório' }
-          ],
-          colSpan: 1
         }
       ]
     }
