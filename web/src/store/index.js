@@ -6,19 +6,37 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    fornecedores: []
+    fornecedores: [],
+    contas: [],
+    titulos: []
   },
   mutations: {
     setFornecedores (state, lista) {
       state.fornecedores = lista
+    },
+    setContas (state, lista) {
+      state.contas = lista
+    },
+    setTitulos (state, lista) {
+      state.titulos = lista
     }
   },
   actions: {
-    loadFornecedores: async context => {
-      const { data } = await axios.get('/financeiro/fornecedores/')
-      context.commit('setFornecedores', data)
-      return data
-    }
+    loadFornecedores: ({ commit }) => axios
+      .get('/financeiro/fornecedores/')
+      .then(res => {
+        commit('setFornecedores', res.data)
+      }),
+    loadContas: ({ commit }) => axios
+      .get('/financeiro/contas/')
+      .then(res => {
+        commit('setContas', res.data)
+      }),
+    loadTitulos: ({ commit }) => axios
+      .get('/financeiro/titulos/')
+      .then(res => {
+        commit('setTitulos', res.data)
+      })
   },
   modules: {
   }

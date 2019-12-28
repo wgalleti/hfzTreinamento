@@ -1,5 +1,5 @@
 <template>
-  <div class="contas">
+  <div class="fornecedores">
     <app-crud
       url="/financeiro/fornecedores/"
       :colunas="colunas"

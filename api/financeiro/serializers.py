@@ -15,6 +15,11 @@ class ContaSerializer(serializers.ModelSerializer):
 
 
 class TituloSerializer(serializers.ModelSerializer):
+    fornecedor_display = serializers.SerializerMethodField('_fornecedor')
+
+    def _fornecedor(self, obj: Titulo):
+        return FornecedorSerializer(obj.fornecedor).data
+
     class Meta:
         model = Titulo
         fields = '__all__'

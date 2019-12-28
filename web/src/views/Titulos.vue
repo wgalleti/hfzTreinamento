@@ -1,5 +1,5 @@
 <template>
-  <div class="contas">
+  <div class="titulos">
     <app-crud
       url="/financeiro/titulos/"
       :colunas="colunas"
@@ -10,8 +10,8 @@
 
 <script>
 export default {
-  mounted () {
-    this.$store.dispatch('loadFornecedores')
+  async created () {
+    await this.$store.dispatch('loadFornecedores')
   },
   methods: {
     getFornecedores (options) {
@@ -99,7 +99,8 @@ export default {
           dataField: 'fornecedor',
           validationRules: [
             { type: 'required', message: 'O fornecedor é obrigatório' }
-          ]
+          ],
+          colSpan: 2
         }
       ]
     }

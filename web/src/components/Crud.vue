@@ -24,6 +24,9 @@ export default {
       type: String,
       required: true
     },
+    carregarDados: {
+      type: Function
+    },
     colunas: {
       type: Array,
       required: true
@@ -74,6 +77,9 @@ export default {
       return new CustomStore({
         key: 'id',
         load: async options => {
+          if (this.carregarDados) {
+            await this.carregarDados()
+          }
           let dados = []
           try {
             const { data } = await this.axios.get(this.url)
