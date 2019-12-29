@@ -82,6 +82,11 @@ export default {
       if (!this.titulo) return false
       return this.titulo.saldo >= e.value
     },
+    validaSaldo (e) {
+      if (e.value === null) return true
+      const conta = this.$store.state.contas.filter(f => f.id === e.value)[0]
+      return conta.saldo - this.formData.valor >= 0
+    },
     async carregar () {
       this.titulo = null
       await this.$store.dispatch('loadContas')
@@ -172,7 +177,12 @@ export default {
             displayExpr: 'descricao'
           },
           validationRules: [
-            { type: 'required', message: 'A conta é obrigatório' }
+            { type: 'required', message: 'A conta é obrigatório' },
+            {
+              type: 'custom',
+              message: 'A conta selecionada não possui saldo',
+              validationCallback: this.validaSaldo
+            }
           ],
           colSpan: 1
         },

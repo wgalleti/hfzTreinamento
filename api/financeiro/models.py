@@ -36,6 +36,11 @@ class Conta(models.Model):
         default=0
     )
 
+    @property
+    def saldo(self):
+        movimentos = sum(self.pagamento_set.all().values_list('valor', flat=True))
+        return self.saldo_inicial - movimentos
+
     def __str__(self):
         return self.descricao
 
