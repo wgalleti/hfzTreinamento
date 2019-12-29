@@ -15,9 +15,9 @@
 <script>
 export default {
   methods: {
-    async carregar () {
-      await this.$store.dispatch('loadContas')
-      await this.$store.dispatch('loadTitulos')
+    carregar () {
+      this.$store.dispatch('loadContas')
+      this.$store.dispatch('loadTitulos')
     },
     getTitulos (options) {
       return {

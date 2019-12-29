@@ -14,7 +14,7 @@ class ContaSerializer(serializers.ModelSerializer):
         decimal_places=2,
         read_only=True
     )
-    
+
     class Meta:
         model = Conta
         fields = '__all__'

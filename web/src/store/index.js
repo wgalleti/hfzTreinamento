@@ -9,7 +9,10 @@ export default new Vuex.Store({
     fornecedores: [],
     contas: [],
     titulos: [],
-    titulosPendentes: []
+    titulosPendentes: [],
+    graficoSaldoContas: [],
+    graficoGastoFornecedor: [],
+    agendaPagamentos: []
   },
   mutations: {
     setFornecedores (state, lista) {
@@ -23,6 +26,15 @@ export default new Vuex.Store({
     },
     setTitulosPendentes (state, lista) {
       state.titulosPendentes = lista
+    },
+    setGraficoSaldoContas (state, lista) {
+      state.graficoSaldoContas = lista
+    },
+    setGraficoGastoFornecedor (state, lista) {
+      state.graficoGastoFornecedor = lista
+    },
+    setAgendaPagamentos (state, lista) {
+      state.agendaPagamentos = lista
     }
   },
   actions: {
@@ -30,22 +42,51 @@ export default new Vuex.Store({
       .get('/financeiro/fornecedores/')
       .then(res => {
         commit('setFornecedores', res.data)
+        return res.data
       }),
     loadContas: ({ commit }) => axios
       .get('/financeiro/contas/')
       .then(res => {
         commit('setContas', res.data)
+        return res.data
       }),
     loadTitulos: ({ commit }) => axios
       .get('/financeiro/titulos/')
       .then(res => {
         commit('setTitulos', res.data)
+        return res.data
       }),
     loadTitulosPendentes: ({ commit }) => axios
       .get('/financeiro/titulos/pendentes/')
       .then(res => {
         commit('setTitulosPendentes', res.data)
-      })
+        return res.data
+      }),
+    loadGraficoSaldoContas: ({ commit }) => axios
+      .get('/financeiro/contas/')
+      .then(
+        res => {
+          const data = res.data.map(m => ({ arg: m.descricao, val: m.saldo }))
+          commit('setGraficoSaldoContas', data)
+          return data
+        }
+      ),
+    loadGraficoGastoFornecedor: ({ commit }) => axios
+      .get('/financeiro/fornecedores/gastos/')
+      .then(
+        res => {
+          commit('setGraficoGastoFornecedor', res.data)
+          return res.data
+        }
+      ),
+    loadAgendaPagamentos: ({ commit }) => axios
+      .get('/financeiro/titulos/agenda/')
+      .then(
+        res => {
+          commit('setAgendaPagamentos', res.data.map(m => ({ ...m, startDate: new Date(m.startDate) })))
+          return res.data
+        }
+      )
   },
   modules: {
   }

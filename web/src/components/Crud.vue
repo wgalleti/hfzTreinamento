@@ -9,17 +9,34 @@
     :show-borders="true"
     :on-toolbar-preparing="toolbarPreparing"
     @selection-changed="onSelectionChanged"
-  />
+    :hover-state-enabled="true"
+    :row-alternation-enabled="true"
+    :column-auto-width="true"
+    :height="500"
+  >
+    <DxPager
+      :allowed-page-sizes="[5, 10, 15]"
+      :show-page-size-selector="true"
+      :show-info="true"
+    />
+    <DxPaging :page-size="10" />
+  </DxDataGrid>
 </template>
 
 <script>
-import DxDataGrid from 'devextreme-vue/data-grid'
+import DxDataGrid, {
+  DxPager,
+  DxPaging
+} from 'devextreme-vue/data-grid'
+
 import CustomStore from 'devextreme/data/custom_store'
 import notify from 'devextreme/ui/notify'
 
 export default {
   components: {
-    DxDataGrid
+    DxDataGrid,
+    DxPager,
+    DxPaging
   },
   props: {
     url: {
@@ -115,7 +132,7 @@ export default {
         key: 'id',
         load: async options => {
           if (this.carregarDados) {
-            await this.carregarDados()
+            this.carregarDados()
           }
           let dados = []
           try {
