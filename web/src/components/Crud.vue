@@ -20,13 +20,26 @@
       :show-info="true"
     />
     <DxPaging :page-size="10" />
+
+    <DxMasterDetail
+      :enabled="mestreDetalhe !== null"
+      template="mestreDetalheTemplate"
+    />
+    <template #mestreDetalheTemplate="{ data }">
+      <component
+        :is="mestreDetalhe"
+        :dados="data"
+      />
+    </template>
+
   </DxDataGrid>
 </template>
 
 <script>
 import DxDataGrid, {
   DxPager,
-  DxPaging
+  DxPaging,
+  DxMasterDetail
 } from 'devextreme-vue/data-grid'
 
 import CustomStore from 'devextreme/data/custom_store'
@@ -36,7 +49,8 @@ export default {
   components: {
     DxDataGrid,
     DxPager,
-    DxPaging
+    DxPaging,
+    DxMasterDetail
   },
   props: {
     url: {
@@ -69,6 +83,10 @@ export default {
     acoes: {
       type: Array,
       default: () => []
+    },
+    mestreDetalhe: {
+      type: String,
+      default: null
     }
   },
   data () {

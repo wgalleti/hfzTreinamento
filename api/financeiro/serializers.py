@@ -36,8 +36,14 @@ class TituloSerializer(serializers.ModelSerializer):
         read_only=True
     )
 
+    detalhe_pagamentos = serializers.SerializerMethodField('_detalhe_pagamentos')
+
     def _fornecedor(self, obj: Titulo):
         return FornecedorSerializer(obj.fornecedor).data
+
+    def _detalhe_pagamentos(self, obj: Titulo):
+        pagamentos = obj.pagamento_set.all()
+        return PagamentoSerializer(pagamentos, many=True).data
 
     class Meta:
         model = Titulo

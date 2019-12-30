@@ -12,8 +12,6 @@
           <dash-grafico-gasto-fornecedor />
         </v-col>
       </v-row>
-
     </v-content>
-
   </div>
 </template>

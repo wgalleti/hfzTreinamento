@@ -12,6 +12,7 @@
       :formulario="formulario"
       :acoes="acoes"
       @selecionou="tituloSelecionado = $event"
+      mestre-detalhe="app-detalhe-pagamento"
     />
   </div>
 </template>
