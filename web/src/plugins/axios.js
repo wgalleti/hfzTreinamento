@@ -4,7 +4,7 @@ import Vue from 'vue'
 import axios from 'axios'
 
 let config = {
-  baseURL: 'http://api.wgalleti.io'
+  baseURL: process.env.VUE_APP_BASE_URL
 }
 
 const _axios = axios.create(config)
