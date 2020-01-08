@@ -5,10 +5,7 @@ cache: npm
 env:
   secure: TzNdyIBNTH66lSacYTA2ToFS4Tqgk8uMhMuGZEBIz5DkRSKKY2aFSyGetJ8LCCDc+rDPsxnWt4K7faFt3+2YBM8rone19Y+TKHHW1zW5HqhJ0NtOX7eC99DjC2kPZajhOsknT1Is7ixS04hExGiAYdQCTJo965W1IdR2Rd1ogsmIviY1PVwATALxQu9jXrZ6kP5PNJdt2QElUbypvcIe0vXP3TKjZnIhMEW+bWdPtICN+7SZYHN9cQI4fRDk6QaMn1jmE8NBTDFJeqEd0J/wMxfS4R+u5J0D6mfjYckiVpPcODqQ3CPeXoZkVf1s7ZsxTvhYgnoiHm+8RtpuxMKmVQlmBuG4ZAF5boWa6pcUeA/zXolKwDQQKUtAJOuj5eGOP8gdF0vRtvNcA1tl2Duwk411IxSVBVJUhUaiYclGFHNaeAUmfCvTE+EbIU+CWsyrog/ka3dwL2Swd9sVOaFK1SrqJ3vIkjj+fyu0Vd5wGP/nuQjtZkGLp2TGuKpJfLvm8mk3t6h90CQgR8rWbsO4HWs+ZMoiLF8QOphaFz2W8wox52OxY9lSET4ub+h1bFwnvbTjfN06xoxmiFrLFZ9ZsDTjEBVyBgNLUokwjN5x6gRvniV2mgQOMuCuvuhWSSgGNetnCz1WyrTXvvNpSCv4pL0WicgHtFArNv5ETIWRjHQ=
   VUE_APP_BASE_URL: http://api.galleti.io
-script: 
-  -cd web 
-  -npm i 
-  -npm run build --production
+script: cd web
 deploy:
   provider: pages
   skip_cleanup: true
